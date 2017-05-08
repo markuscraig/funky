@@ -1,6 +1,6 @@
 /*
 
-Creates a funky project file and other boilerplate
+Creates a funKy project file and other boilerplate
 
 Code reused and derived from the excellent Apex project:
 
