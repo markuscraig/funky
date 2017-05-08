@@ -60,11 +60,14 @@ func (p *Project) Boot() error {
 
 	// ask for the project name
 	help("Enter the project name. This name will be used\nas a prefix to the cloud function names.\n")
-	p.Name = prompt.StringRequired("  Project name: ")
+	p.Name = prompt.StringRequired(indent("  Project name: "))
 
 	// create the function prefix based on the project name
-	help(indent("Enter an optional project description"))
+	help("Enter an optional project description\n")
 	p.Description = prompt.String(indent("  Project description: "))
+	if p.Description == "" {
+		p.Description = "~" // empty yaml string
+	}
 	fmt.Println()
 
 	// initialize the project files
@@ -72,19 +75,29 @@ func (p *Project) Boot() error {
 		return err
 	}
 
+	// dump footer
+	fmt.Println(`
+All done! Try these other commands...
+
+  $ funky list
+  $ funky deploy
+  $ funky invoke hello-go
+  $ funky invoke hello-js
+`)
 	return nil
 }
 
 func (p *Project) initFiles() error {
-	fmt.Printf("creating ./funky.yaml")
 
 	// create the project file
+	logf("creating ./funky.yaml")
 	project := fmt.Sprintf(projectConfig, p.Name, p.Description)
-	if err := ioutil.WriteFile("funky.yaml", []byte(project), 644); err != nil {
+	if err := ioutil.WriteFile("funky.yaml", []byte(project), 0644); err != nil {
 		return err
 	}
 
 	// create the functions directory
+	logf("creating functions directory")
 	fpath := "functions"
 	if _, err := os.Stat(fpath); os.IsNotExist(err) {
 		os.Mkdir(fpath, 0755)
@@ -111,4 +124,9 @@ func indent(s string) (out string) {
 	}
 
 	return
+}
+
+// logf outputs a log message.
+func logf(s string, v ...interface{}) {
+	fmt.Printf("  \033[34m[+]\033[0m %s\n", fmt.Sprintf(s, v...))
 }
