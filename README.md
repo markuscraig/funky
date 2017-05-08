@@ -48,7 +48,7 @@ TBD
 Create a new project...
 
 ```bash
-# Create a project named 'simple'. This creates the 'funky.yml' project file.
+# Create a project named 'simple'. This creates the 'funky.yaml' project file.
 $ funky init simple [--bucket <NAME>]
 ```
 
