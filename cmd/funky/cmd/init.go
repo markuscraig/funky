@@ -17,7 +17,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/markuscraig/funky/boot"
+	"github.com/markuscraig/funky/project"
 	"github.com/spf13/cobra"
 )
 
@@ -51,11 +51,11 @@ func init() {
 
 func run(cmd *cobra.Command, args []string) {
 	// get the project name
-	p := "MyProject"
+	name := "MyProject"
 
 	// bootstrap the project
-	b := boot.NewBootstrapper(p)
-	if err := b.Boot(); err != nil {
+	p := project.NewProject(name)
+	if err := p.Boot(); err != nil {
 		panic(fmt.Errorf("Could not initialize project '%s': %v\n", p, err))
 	}
 }

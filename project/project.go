@@ -2,14 +2,9 @@
 
 Creates a funKy project file and other boilerplate
 
-Code reused and derived from the excellent Apex project:
-
-	https://apex.run
-	https://github.com/apex/apex/tree/master/boot
-
 */
 
-package boot
+package project
 
 import (
 	"fmt"
@@ -25,17 +20,26 @@ const logo = `
 
 `
 
-type Bootstrapper struct {
-	name string
+type Project struct {
+	Name   string
+	Prefix string
 }
 
-func NewBootstrapper(name string) *Bootstrapper {
-	return &Bootstrapper{
-		name: name,
+func NewProject(name string) *Project {
+	return &Project{
+		Name: name,
 	}
 }
 
-func (b *Bootstrapper) Boot() error {
+func (p *Project) Boot() error {
+	// dump header
 	fmt.Println(logo)
+
+	// if the project name is given
+
+	// ask for the project name
+
+	// create the function prefix based on the project name
+
 	return nil
 }
