@@ -31,7 +31,7 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	Run: run,
+	Run: runInit,
 }
 
 func init() {
@@ -49,7 +49,7 @@ func init() {
 
 }
 
-func run(cmd *cobra.Command, args []string) {
+func runInit(cmd *cobra.Command, args []string) {
 	// get the project name
 	name := "MyProject"
 

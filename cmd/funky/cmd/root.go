@@ -2,9 +2,15 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+)
+
+var (
+	// Version is given from main and set here in Execute
+	Version string
 )
 
 func init() {
@@ -22,18 +28,32 @@ func init() {
 	//viper.SetDefault("license", "apache")
 }
 
+// Execute is called from 'main' with the version info
+func Execute(version string) {
+	// update the local version
+	Version = version
+
+	// execute the top-level root command handler
+	if err := RootCmd.Execute(); err != nil {
+		fmt.Println(err)
+		os.Exit(-1)
+	}
+}
+
 // RootCmd is the top-level cli command handler
 var RootCmd = &cobra.Command{
 	Use:   "funky",
 	Short: "Funky manages Google Cloud Functions in multiple languages",
 	Long: `A simple and intuitive manager for Google Cloud Functions
 that can be written in different languages.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// read the 'funky.yaml' config file
-		viper.SetConfigName("funky")
-		viper.AddConfigPath(".")
-		if err := viper.ReadInConfig(); err != nil {
-			fmt.Printf("\nNo 'funky.yaml' config file found\n\n")
-		}
-	},
+	Run: runRoot,
+}
+
+func runRoot(cmd *cobra.Command, args []string) {
+	// read the 'funky.yaml' config file
+	viper.SetConfigName("funky")
+	viper.AddConfigPath(".")
+	if err := viper.ReadInConfig(); err != nil {
+		fmt.Printf("\nNo 'funky.yaml' config file found\n\n")
+	}
 }
