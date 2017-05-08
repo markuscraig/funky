@@ -1,4 +1,4 @@
 package: github.com/markuscraig/funky
 import:
+- package: github.com/tj/go-prompt
 - package: github.com/spf13/cobra
-  version: ^1.2.0
